@@ -3,11 +3,11 @@ import './comicsList.scss';
 import { useState, useEffect } from 'react';
 import Spinner from '../spinner/Spinner.jsx';
 import ErrorMessage from '../errorMessage/ErrorMessage.jsx';
-import { useMarvelService } from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 const ComicsList = () => {
 
     const [comicsList, setComicsList] = useState([]);
-    const [newItemLoading, setnewItemLoading] = useState(false);
+    const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(0);
     const [comicsEnded, setComicsEnded] = useState(false);
 
@@ -20,7 +20,7 @@ const ComicsList = () => {
     const onRequest = (offset, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
         getAllComics(offset)
-            .then(onCharListLoaded)
+            .then(onComicsListLoaded)
     }
 
     const onComicsListLoaded = (newComicsList) => {
@@ -29,7 +29,7 @@ const ComicsList = () => {
             ended = true;
         }
         setComicsList([...comicsList, ...newComicsList]);
-        setnewItemLoading(false);
+        setNewItemLoading(false);
         setOffset(offset + 8);
         setComicsEnded(ended);
     }
@@ -74,7 +74,6 @@ const ComicsList = () => {
             </button>
         </div>
     )
-
 }
 
 export default ComicsList;
